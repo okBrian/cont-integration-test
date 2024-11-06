@@ -7,7 +7,7 @@ with open("raw_output.txt", "r") as file:
 
 # Generate a hash based on the output
 output_hash = hashlib.sha256(output.encode()).hexdigest()
-file_name = f"{output_hash}.json"
+file_name = "out.json"
 
 # Write output to JSON with the hash as filename
 with open(file_name, "w") as json_file:
