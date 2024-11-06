@@ -8,19 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: setup
+      - name: run
         run: |
-          sudo apt update -y 
-          sudo apt install -y g++
-
-      - name: compile
-        run: |
-          g++ superbsoftware.cpp -o superbsoftware
-
-      - name: run and format output
-        run: |
-          ./superbsoftware > raw_output.txt
-          python3 format.py
+          python3 main.py
 
       - name: Download previous benchmark data
         uses: actions/cache@v4
@@ -33,7 +23,7 @@ jobs:
         with:
           tool: 'customSmallerIsBetter'
           auto-push: true
-          output-file-path: out.json
+          output-file-path: benchmark.json
           fail-on-alert: true
           alert-comment-cc-users: '@okBrian'
           alert-threshold: '200%'
