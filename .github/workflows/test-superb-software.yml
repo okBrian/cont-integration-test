@@ -27,7 +27,7 @@ jobs:
             - name: Store benchmark result
               uses: benchmark-action/github-action-benchmark@v1
               with:
-                tool: 'smallerIsBetter'
+                tool: 'customSmallerIsBetter'
                 auto-push: true
                 output-file-path: examples/output.txt
                 external-data-json-path: ./cache/benchmark-data.json
