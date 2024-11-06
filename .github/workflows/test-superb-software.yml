@@ -1,6 +1,7 @@
 name: 'very test'
 
-on: push
+on: 
+    [push, workflow_dispatch]
 
 permissions:
   deployments: write

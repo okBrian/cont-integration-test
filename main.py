@@ -14,7 +14,7 @@ data = [
     {
         "name": "hallo",
         "unit": "asd",
-        "value": random_value % 50
+        "value": random_value % 20
     }
 ]
   
