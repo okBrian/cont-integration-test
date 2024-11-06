@@ -2,6 +2,9 @@ name: 'very test'
 
 on: push
 
+permissions:
+  contents: write
+
 jobs:
   github:
     runs-on: 'ubuntu-latest'
