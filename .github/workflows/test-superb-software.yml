@@ -1,0 +1,42 @@
+name: 'very test'
+
+on: push
+
+jobs:
+    github:
+        runs-on: "ubuntu:latest"
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: setup
+              run: apt-get install g++
+
+            - name: run
+              run: |
+                g++ superbsoftware.cpp
+                ./a.out | tee output.txt
+
+            - name: Download previous benchmark data
+              uses: actions/cache@v4
+              with:
+                path: ./cache
+                key: ${{ runner.os }}-benchmark
+
+            - name: Store benchmark result
+              uses: benchmark-action/github-action-benchmark@v1
+              with:
+                tool: 'smallerIsBetter'
+                auto-push: true
+                output-file-path: examples/output.txt
+                external-data-json-path: ./cache/benchmark-data.json
+                fail-on-alert: true
+                alert-comment-cc-users: '@okBrian'
+                alert-threshold: '200%'
+                comment-on-alert: true
+                gh-repository: 'github.com/okBrian/cont-integration-stats'
+                github-token: ${{ secrets.TOKEN }}
+
+            
+
+
+
