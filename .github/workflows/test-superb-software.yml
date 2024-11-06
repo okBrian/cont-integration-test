@@ -3,6 +3,7 @@ name: 'very test'
 on: push
 
 permissions:
+  deployments: write
   contents: write
 
 jobs:
