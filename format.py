@@ -1,20 +1,19 @@
 import json
 import hashlib
 
-# Read the raw output from the file
 with open("raw_output.txt", "r") as file:
     output = file.read().strip()
 
-# Generate a hash based on the output
 output_hash = hashlib.sha256(output.encode()).hexdigest()
 file_name = "out.json"
 
-# Write output to JSON with the hash as filename
-with open(file_name, "w") as json_file:
-    json.dump({
+json_data = [
+    {
         "name": output_hash,
-        "unit": "wow",
-        "result": output
-    }, json_file)
+        "unit": "Percent",
+        "value": int(output)
+    }
+]
 
-print(f"::set-output name=file_name::{file_name}")  # Pass the JSON filename back to GitHub Actions
+with open(file_name, "w") as json_file:
+    json.dump(json_data, json_file, indent=4)
