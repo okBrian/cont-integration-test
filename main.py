@@ -12,7 +12,7 @@ data = [
         "value": random_value
     }
 ]
-
+  
 # Write to a JSON file
 with open('benchmark.json', 'w') as f:
     json.dump(data, f, indent=4)
