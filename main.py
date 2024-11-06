@@ -1,6 +1,5 @@
 import json
 import random
-import gspread
 
 # Generate a random number between 0 and 100
 random_value = random.randint(0, 100)
