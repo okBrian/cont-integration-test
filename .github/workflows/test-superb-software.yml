@@ -3,42 +3,40 @@ name: 'very test'
 on: push
 
 jobs:
-    github:
-        runs-on: 'ubuntu-latest'
-        steps:
-            - uses: actions/checkout@v4
+  github:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: setup
-              run: |
-                sudo apt update -y 
-                sudo apt install -y g++
+      - name: setup
+        run: |
+          sudo apt update -y 
+          sudo apt install -y g++
 
-            - name: run
-              run: |
-                g++ superbsoftware.cpp
-                ./a.out | tee output.json
+      - name: compile
+        run: |
+          g++ superbsoftware.cpp -o superbsoftware
 
-            - name: Download previous benchmark data
-              uses: actions/cache@v4
-              with:
-                path: ./cache
-                key: ${{ runner.os }}-benchmark
+      - name: run and format output
+        run: |
+          ./superbsoftware > raw_output.txt
+          python3 format.py
 
-            - name: Store benchmark result
-              uses: benchmark-action/github-action-benchmark@v1
-              with:
-                tool: 'customSmallerIsBetter'
-                auto-push: true
-                output-file-path: output.json
-                # external-data-json-path: ./cache/benchmark-data.json
-                fail-on-alert: true
-                alert-comment-cc-users: '@okBrian'
-                alert-threshold: '200%'
-                comment-on-alert: true
-                gh-repository: 'github.com/okBrian/cont-integration-stats'
-                github-token: ${{ secrets.TOKEN }}
+      - name: Download previous benchmark data
+        uses: actions/cache@v4
+        with:
+          path: ./cache
+          key: ${{ runner.os }}-benchmark
 
-            
-
-
-
+      - name: Store benchmark result
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: 'customSmallerIsBetter'
+          auto-push: true
+          output-file-path: ${{ steps.hash.outputs.file_name }}
+          fail-on-alert: true
+          alert-comment-cc-users: '@okBrian'
+          alert-threshold: '200%'
+          comment-on-alert: true
+          gh-repository: 'github.com/okBrian/cont-integration-stats'
+          github-token: ${{ secrets.TOKEN }}
